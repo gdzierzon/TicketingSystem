@@ -9,51 +9,57 @@ public class Main
 
     static void main()
     {
-        final double TICKET_PRICE = 9.95;
 
-        // **********************************
-        // get reservation info from user
-        // **********************************
+        // get user input
+        Reservation theReservation = getReservationDetails();
+
+
+        // display user output
+        displayReservationConfirmation(theReservation);
+
+
+    }
+
+    // get all user input for the reservation
+    static Reservation getReservationDetails()
+    {
+        Reservation theReservation = new Reservation();
 
         // ask for user name
         System.out.print("Enter your name: ");
         String name = scanner.nextLine();
+        theReservation.setName(name);
 
         // ask for reservation date
         System.out.print("Enter the reservation date (yyyy-mm-dd): ");
         String dateInput = scanner.nextLine();
-        LocalDate resrvationDate = LocalDate.parse(dateInput);
+        LocalDate reservationDate = LocalDate.parse(dateInput);
+        theReservation.setReservationDate(reservationDate);
+
 
         // ask for number of tickets
         System.out.print("Enter the number of tickets you need ($9.95 each): ");
         int numberOfTickets = scanner.nextInt();
         scanner.nextLine();
+        theReservation.setNumberOfTickets(numberOfTickets);
 
+        return theReservation;
 
-        // **********************************
-        // Calculate ticket cost etc
-        // **********************************
+    }
 
-        // calculate price
-        double reservationTotal = numberOfTickets * TICKET_PRICE;
-        String ticketLabel = (numberOfTickets > 1)
-                                ? "Tickets:"
-                                : "Ticket:";
-
-
-        // **********************************
-        // display reservation /confirmation info
-        // **********************************
+    static void displayReservationConfirmation(Reservation theReservation)
+    {
+        String ticketLabel = (theReservation.getNumberOfTickets() > 1)
+                ? "Tickets:"
+                : "Ticket:";
 
         System.out.println();
         System.out.println("Reservation Details");
         System.out.println("---------------------------------------");
-        System.out.printf("Name:               %s \n", name);
-        System.out.printf("Reservation Date:   %tD \n", resrvationDate);
+        System.out.printf("Name:               %s \n", theReservation.getName());
+        System.out.printf("Reservation Date:   %tD \n", theReservation.getReservationDate());
         System.out.println("Cost per Ticket:    $ 9.95");
-        System.out.printf("%-8s            %d \n", ticketLabel, numberOfTickets);
-        System.out.printf("Total Cost:         $ %.2f \n", reservationTotal);
-
-
+        System.out.printf("%-8s            %d \n", ticketLabel, theReservation.getNumberOfTickets());
+        System.out.printf("Total Cost:         $ %.2f \n", theReservation.getReservationTotal());
     }
 }
